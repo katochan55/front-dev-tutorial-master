@@ -1,0 +1,54 @@
+$cBlack: black;
+
+body {
+  text-align: center;
+}
+
+@mixin animation(
+  // 引数を定義
+  $name,
+  $duration: 1s  // デフォルト値
+) {
+  animation: {
+    name: $name;
+    duration: $duration;
+  }
+  background: {
+    color: $cBlack;
+    // ...
+  }
+}
+
+.rect {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  // @mixinを@includeで呼び出し
+  @include animation(
+    $name: sk-bouncedelay
+  );
+  // animation: sk-bouncedelay 1.4s;
+  animation-timing-function: ease;
+  animation-delay: 3s;  // 遅延時間
+  animation-iteration-count: 4;  // 繰り返し数
+  animation-direction: reverse;  // 100% -> 0%に動く
+  animation-direction: alternate;  // 0% -> 100% -> 0%と折り返して動く
+  animation-fill-mode: forwards;  // 終了時点の状態で残す
+  animation-play-state: paused;  // 途中停止
+}
+
+// @keyframes: 途中経過を詳細に記述したいに便利
+// 0%はfrom, 100%はtoとも書ける
+@keyframes sk-bouncedelay {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
